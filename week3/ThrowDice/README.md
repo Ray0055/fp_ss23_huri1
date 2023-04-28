@@ -1,0 +1,1 @@
+Throw two dice n times.

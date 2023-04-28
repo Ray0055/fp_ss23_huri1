@@ -1,0 +1,14 @@
+name: ThrowDice
+description: A simple dice rolling program
+version: 1.0.0
+# repository: https://theogit.fmi.uni-stuttgart.de/fapra_ss2023/fp_ss23_huri.git
+
+environment:
+  sdk: '>=2.19.4 <3.0.0'
+
+# dependencies:
+#   path: ^1.8.0
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0
