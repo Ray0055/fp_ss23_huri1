@@ -7,7 +7,7 @@ void main() {
   runApp(MyApp());
 }
 
-List _sumStatistics = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+List _sumStatistics = List.generate(11, (index) => 0);
 List<List<int>> _dieStatistics = List.generate(6, (_) => List.filled(6, 0));
 bool _isSwitched = false;
 int diceSum = 0;
@@ -261,9 +261,7 @@ class _StatisticsPage extends State<StatisticsPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Color.lerp(
-                        Colors.red,
-                        Colors.green,
+                    color: Color.lerp(Colors.red, Colors.green,
                         _sumStatistics[index] / (maxSum + 1)),
                     border: Border.all(color: Colors.black),
                   ),
@@ -287,7 +285,7 @@ class _StatisticsPage extends State<StatisticsPage> {
                           ? Colors.red
                           : (_dieStatistics[row][col] == maxdie
                               ? Colors.green
-                              : Colors.grey),
+                              : Colors.white),
                       border: Border.all(color: Colors.black, width: 1),
                     ),
                     child: Center(
