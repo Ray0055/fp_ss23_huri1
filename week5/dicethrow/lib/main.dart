@@ -281,11 +281,8 @@ class _StatisticsPage extends State<StatisticsPage> {
                 return Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _dieStatistics[row][col] == 0
-                          ? Colors.red
-                          : (_dieStatistics[row][col] == maxdie
-                              ? Colors.green
-                              : Colors.white),
+                      color: Color.lerp(Colors.red, Colors.green,
+                          _dieStatistics[row][col] / (maxdie + 1)),
                       border: Border.all(color: Colors.black, width: 1),
                     ),
                     child: Center(
