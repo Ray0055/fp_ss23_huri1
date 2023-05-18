@@ -7,9 +7,9 @@ void main() {
   int num = int.parse(stdin.readLineSync()!);
   dice.throwDice(false, num);
   print(
-      "equalDistr = ${dice.eqaulDistr}, numberOfThrows = ${dice.numberOfThrows},sumStatistics = ${dice.sumStatistics}");
+      "equalDistr = ${dice.eqaulDistr}, numberOfThrows = ${dice.numberOfThrows},sumStatistics = ${dice.sumStatistics}, dieStatistics = ${dice.dieStatistics}");
   dice.resetStatistics();
   dice.throwDice(true, num);
   print(
-      "equalDistr = ${dice.eqaulDistr}, numberOfThrows = ${dice.numberOfThrows},sumStatistics = ${dice.sumStatistics}");
+      "equalDistr = ${dice.eqaulDistr}, numberOfThrows = ${dice.numberOfThrows},sumStatistics = ${dice.sumStatistics}, dieStatistics = ${dice.dieStatistics}");
 }

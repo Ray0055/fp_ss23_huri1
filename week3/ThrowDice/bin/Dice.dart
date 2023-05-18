@@ -25,7 +25,7 @@ class Dice {
     this.numberOfThrows = numberOfThrows;
     this.eqaulDistr = eqaulDistr;
     if (!eqaulDistr) {
-      Random random = Random(0);
+      Random random = Random();
       //create n times rolls
       final dice1 =
           List.generate(numberOfThrows, (_) => random.nextInt(rangeOfDie));
@@ -44,8 +44,8 @@ class Dice {
     equal probability of rolling dice.
     */
     else {
-      final random2 = Random(1);
-      final random3 = Random(2);
+      final random2 = Random();
+      final random3 = Random();
       final dice = List.generate(2 * (maxDie - minDie) - 1, (index) => 0);
       for (int i = 0; i < numberOfThrows; i++) {
         int choosedSum = random2.nextInt(rangeOfSum);
@@ -53,15 +53,16 @@ class Dice {
 
         int matrixSize = maxDie - minDie + 1; // size of matrix
         int diagonalIndex = choosedSum; // from 0 to 2*maxDie - 1
+        int maxDiagonaIndex = rangeOfSum;
         int row, col;
 
         if (diagonalIndex < matrixSize) {
           row = random3.nextInt(diagonalIndex + 1);
           col = diagonalIndex - row;
         } else {
-          row = maxDie - minDie;
-          int lowestBound = (diagonalIndex - matrixSize / 2 - 1).ceil() - 1;
-          col = random3.nextInt(matrixSize - lowestBound) + lowestBound;
+          row = random3.nextInt(maxDiagonaIndex - diagonalIndex) + matrixSize-(maxDiagonaIndex - diagonalIndex);
+          // print(row);
+          col = diagonalIndex - row;
         }
         dieStatistics[row][col]++;
       }

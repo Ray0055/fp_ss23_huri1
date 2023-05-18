@@ -1,9 +1,5 @@
 import 'dart:math';
-import 'package:collection/collection.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week6/providers/providers.dart';
 
 class Dice extends ChangeNotifier {
   bool eqaulDistr = false;
@@ -122,9 +118,8 @@ class Dice extends ChangeNotifier {
         }
       }
     } else {
-      
-      for (int i = 0; i< statistics.length; i++){
-        if (statistics[i] > maxSum){
+      for (int i = 0; i < statistics.length; i++) {
+        if (statistics[i] > maxSum) {
           maxSum = statistics[i];
           maxSumIndex = i + 2;
         }
