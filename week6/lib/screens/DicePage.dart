@@ -16,7 +16,8 @@ class DicePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Dice Throw'),
       ),
-      body: Column(
+      body: SingleChildScrollView(
+          child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
@@ -60,6 +61,7 @@ class DicePage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                textAlign: TextAlign.left,
                 'The total number of throws: ${ref.watch(diceProvider).sumThrows} ',
                 style: const TextStyle(fontSize: 15),
               ),
@@ -111,11 +113,57 @@ class DicePage extends ConsumerWidget {
           ElevatedButton(
               style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
               onPressed: () {
-                print(timer.getMinimum());
+                ref.watch(movieProvider).toFuture();
               },
-              child: Text("reset timer"))
+              child: Text("Movie")),
+          SingleChildScrollView(
+              child: SizedBox(
+            width: 400,
+            height: 400,
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    child: FutureBuilder(
+                      future: ref.watch(movieProvider).list,
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return Image.network(
+                              "https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png");
+                        } else {
+                          return Column(
+                            children: [
+                              Image.network(ref
+                                  .watch(movieProvider)
+                                  .getUrl(snapshot.data[0]["backdrop_path"])),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    '${snapshot.data[0]["name"]}',
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ))
+                            ],
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
         ],
-      ),
+      )),
     );
   }
 }
