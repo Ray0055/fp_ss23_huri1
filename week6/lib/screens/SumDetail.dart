@@ -10,7 +10,7 @@ class SumDetialPage extends ConsumerWidget {
     final index = ref.watch(statisticsIndexProvider).sumStatisticsIndex;
     final sumThrows = ref.watch(diceProvider).sumThrows;
     final sumStatistics = ref.watch(diceProvider).sumStatistics;
-
+    final timer = ref.watch(timerProvider);
     return Scaffold(
         appBar: AppBar(title: const Text('Sum Detail')),
         body: SettingsList(sections: [
@@ -28,6 +28,12 @@ class SumDetialPage extends ConsumerWidget {
             SettingsTile(
               title: Text(
                   'The maximum sum is: ${ref.watch(diceProvider).maxSum}, which is ${ref.watch(diceProvider).maxSumIndex}'),
+            ),
+            SettingsTile(
+              title: Text('The maximum duration is ${timer.getMaximum()}'),
+            ),
+            SettingsTile(
+              title: Text('The minimum duration is ${timer.getMinimum()}'),
             )
           ])
         ]));

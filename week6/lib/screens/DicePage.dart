@@ -10,6 +10,7 @@ class DicePage extends ConsumerWidget {
     final diceNumber1 = ref.watch(diceProvider).diceNumber1;
     final diceNumber2 = ref.watch(diceProvider).diceNumber2;
     final dice = ref.watch(diceProvider);
+    final timer = ref.watch(timerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +67,12 @@ class DicePage extends ConsumerWidget {
               Text(
                 'The type of distribution: ${ref.watch(diceProvider).eqaulDistr == false ? 'not equal' : 'equal'}',
                 style: const TextStyle(fontSize: 15),
-              )
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Duration between two throws is ${timer.transformTimer(timer.duration)}',
+                style: const TextStyle(fontSize: 15),
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -79,10 +85,35 @@ class DicePage extends ConsumerWidget {
                   onPressed: () {
                     dice.throwDice(dice.eqaulDistr, 1000);
                     dice.increment();
+                    if (timer.isRunning) {
+                      timer.stopTimer();
+                      timer.resetTimer();
+                      timer.startTimer();
+                    } else {
+                      timer.startTimer();
+                    }
                   },
                   child: const Text('1000')),
             ],
           ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
+              onPressed: () {
+                timer.startTimer();
+              },
+              child: Text("start timer")),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
+              onPressed: () {
+                timer.stopTimer();
+              },
+              child: Text("stop timer")),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
+              onPressed: () {
+                print(timer.getMinimum());
+              },
+              child: Text("reset timer"))
         ],
       ),
     );

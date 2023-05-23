@@ -9,7 +9,6 @@ class StatisticsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _sumStatistics = ref.watch(diceProvider).sumStatistics;
     final _dieStatistics = ref.watch(diceProvider).dieStatistics;
-
     int maxSum = _sumStatistics
         .reduce((value, element) => value > element ? value : element);
     int maxdie = _dieStatistics
@@ -50,13 +49,12 @@ class StatisticsPage extends ConsumerWidget {
                     context.pushNamed('sumdetail');
                     ref.watch(statisticsIndexProvider).sumStatistics(index);
                     ref.watch(diceProvider).getMaximum(_sumStatistics);
-                    
                   },
                   child: Container(
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Color.lerp(Color(0xFFE3F2FD),Color(0xFF0D47A1),
+                        color: Color.lerp(Color(0xFFE3F2FD), Color(0xFF0D47A1),
                             _sumStatistics[index] / (maxSum + 1)),
                         border: Border.all(color: Colors.black),
                       ),
@@ -85,7 +83,9 @@ class StatisticsPage extends ConsumerWidget {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Color.lerp(Color(0xFFE3F2FD),Color(0xFF0D47A1),
+                            color: Color.lerp(
+                                Color(0xFFE3F2FD),
+                                Color(0xFF0D47A1),
                                 _dieStatistics[row][col] / (maxdie + 1)),
                             border: Border.all(color: Colors.black, width: 1),
                           ),

@@ -1,4 +1,5 @@
 import 'package:week6/functions/Dice.dart';
+import 'package:week6/functions/time_clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,11 @@ final diceProvider = ChangeNotifierProvider((ref) => Dice(1, 6));
 final bottomBarProvider = ChangeNotifierProvider((ref) => bottomBar());
 final statisticsIndexProvider =
     ChangeNotifierProvider((ref) => selectedIndex());
+final timerProvider = ChangeNotifierProvider((ref) => TimeClock());
 
 class bottomBar extends ChangeNotifier {
   int selectedIndex = 0;
+
   void onItemTapped(int index) {
     selectedIndex = index;
     notifyListeners();
