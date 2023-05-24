@@ -23,10 +23,84 @@ class DicePage extends ConsumerWidget {
           const SizedBox(
             height: 10,
           ),
+          SizedBox(
+            width: 300,
+            height: 312,
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    child: FutureBuilder(
+                      future: ref.watch(movieProvider).list,
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return Column(children: [
+                            Image.asset(
+                                'assets/Images/Cinema-in-the-Power-Station-image001hero-1600x869.jpg'),
+                            const Text('Throw dice to get your film!',
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold))
+                          ]);
+                        } else {
+                          return Column(
+                            children: [
+                              Image.network(ref
+                                  .watch(movieProvider)
+                                  .getUrl(snapshot.data["backdrop_path"])),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${snapshot.data["original_title"]}',
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  (Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 5,
+                                          '${snapshot.data["overview"]}',
+                                          textAlign: TextAlign.left,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                          ))))
+                                ],
+                              )
+                            ],
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               dice.throwDice(dice.eqaulDistr, 1);
               ref.read(diceProvider).increment();
+              if (timer.isRunning) {
+                timer.stopTimer();
+                timer.resetTimer();
+                timer.startTimer();
+              } else {
+                timer.startTimer();
+              }
+              ref.watch(movieProvider).toFuture();
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -94,74 +168,21 @@ class DicePage extends ConsumerWidget {
                     } else {
                       timer.startTimer();
                     }
+                    ref.watch(movieProvider).toFuture();
                   },
                   child: const Text('1000')),
+              const SizedBox(
+                width: 10,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 40)),
+                  onPressed: () {
+                    timer.stopTimer();
+                  },
+                  child: Text("stop timer")),
             ],
           ),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
-              onPressed: () {
-                timer.startTimer();
-              },
-              child: Text("start timer")),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
-              onPressed: () {
-                timer.stopTimer();
-              },
-              child: Text("stop timer")),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(100, 40)),
-              onPressed: () {
-                ref.watch(movieProvider).toFuture();
-              },
-              child: Text("Movie")),
-          SingleChildScrollView(
-              child: SizedBox(
-            width: 400,
-            height: 400,
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    child: FutureBuilder(
-                      future: ref.watch(movieProvider).list,
-                      builder: (context, AsyncSnapshot snapshot) {
-                        if (!snapshot.hasData) {
-                          return Image.network(
-                              "https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png");
-                        } else {
-                          return Column(
-                            children: [
-                              Image.network(ref
-                                  .watch(movieProvider)
-                                  .getUrl(snapshot.data[0]["backdrop_path"])),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '${snapshot.data[0]["name"]}',
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )),
         ],
       )),
     );

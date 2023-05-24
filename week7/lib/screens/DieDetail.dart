@@ -12,7 +12,7 @@ class DieDetailPage extends ConsumerWidget {
     final dieStatistics = ref.watch(diceProvider).dieStatistics;
     final sum = dieStatistics[index[0] - 1][index[1] - 1];
     final prob = dieStatistics[index[0] - 1][index[1] - 1] / sumThrows;
-
+    final timer = ref.watch(timerProvider);
     return Scaffold(
         appBar: AppBar(title: const Text('Die Detail')),
         body: SettingsList(sections: [
@@ -33,6 +33,12 @@ class DieDetailPage extends ConsumerWidget {
             SettingsTile(
               title: Text(
                   'The maximum combination: ${ref.watch(diceProvider).maxDiceIndex}, ${ref.watch(diceProvider).maxDice}'),
+            ),
+            SettingsTile(
+              title: Text('The maximum duration is ${timer.getMaximum()}'),
+            ),
+            SettingsTile(
+              title: Text('The minimum duration is ${timer.getMinimum()}'),
             )
           ])
         ]));

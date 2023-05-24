@@ -20,6 +20,7 @@ class StatisticsPage extends ConsumerWidget {
         title: Text('Statistics'),
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           const Text(
             'Sum Statistics',
@@ -54,7 +55,7 @@ class StatisticsPage extends ConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Color.lerp(Color(0xFFE3F2FD), Color(0xFF0D47A1),
+                        color: Color.lerp(const Color(0xFFE3F2FD), const Color(0xFF0D47A1),
                             _sumStatistics[index] / (maxSum + 1)),
                         border: Border.all(color: Colors.black),
                       ),
@@ -68,36 +69,36 @@ class StatisticsPage extends ConsumerWidget {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20),
           ),
-          ...List.generate(6, (row) {
-            return Expanded(
-              child: Row(
-                children: List.generate(6, (col) {
-                  return Expanded(
-                    child: GestureDetector(
-                        onTap: () {
-                          context.pushNamed('diedetail');
-                          ref
-                              .watch(statisticsIndexProvider)
-                              .dieStatistics(row, col);
-                          ref.watch(diceProvider).getMaximum(_dieStatistics);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color.lerp(
-                                Color(0xFFE3F2FD),
-                                Color(0xFF0D47A1),
-                                _dieStatistics[row][col] / (maxdie + 1)),
-                            border: Border.all(color: Colors.black, width: 1),
-                          ),
-                          child: Center(
-                            child: Text('${_dieStatistics[row][col]}'),
-                          ),
-                        )),
-                  );
-                }),
-              ),
-            );
-          }),
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+            itemCount: 36,
+            itemBuilder: (BuildContext context, int index) {
+              int row, col;
+              row = index % 6;
+              col = index ~/ 6;
+              return GestureDetector(
+                  onTap: () {
+                    context.pushNamed('diedetail');
+                    ref.watch(statisticsIndexProvider).dieStatistics(row, col);
+                    ref.watch(diceProvider).getMaximum(_dieStatistics);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.lerp(
+                          const Color(0xFFE3F2FD),
+                          const Color(0xFF0D47A1),
+                          _dieStatistics[row][col] / (maxdie + 1)),
+                      border: Border.all(color: Colors.black, width: 1),
+                    ),
+                    child: Center(
+                      child: Text('${_dieStatistics[row][col]}'),
+                    ),
+                  ));
+            },
+          ),
+
         ],
       ),
     );

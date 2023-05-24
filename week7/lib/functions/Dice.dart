@@ -140,7 +140,6 @@ class Dice extends ChangeNotifier {
     _historyDieStatistics.add(
         dieStatistics.map<List<int>>((lst) => List<int>.from(lst)).toList());
     _historySumStatistics.add(List<int>.from(sumStatistics.cast<int>()));
-    print(_historyDistribution);
     notifyListeners();
   }
 

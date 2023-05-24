@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -19,10 +20,12 @@ class Movie extends ChangeNotifier {
     };
     Response response = await get(
         Uri.parse(
-            "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1"),
+            "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc"
+    ),
         headers: map);
     var list = jsonDecode(response.body)['results'] as List;
-    return list;
+    Random random = new Random();
+    return list[random.nextInt(20)];
   }
 
   void toFuture() {

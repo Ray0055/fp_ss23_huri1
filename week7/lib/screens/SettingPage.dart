@@ -40,6 +40,8 @@ class SettingPage extends ConsumerWidget {
                               onPressed: () {
                                 ref.watch(diceProvider).resetStatistics();
                                 ref.watch(diceProvider).increment();
+                                ref.watch(timerProvider).resetTimer();
+                                ref.watch(timerProvider).timeStamp = [];
                               })));
                     }),
               ],
