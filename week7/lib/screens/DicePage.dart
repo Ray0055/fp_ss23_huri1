@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week6/providers/providers.dart';
+import 'package:week7/providers/providers.dart';
 
 class DicePage extends ConsumerWidget {
   const DicePage({Key? key}) : super(key: key);

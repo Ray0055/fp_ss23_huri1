@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week6/providers/providers.dart';
+import 'package:week7/providers/providers.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingPage extends ConsumerWidget {

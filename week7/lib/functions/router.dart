@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:week6/screens/DieDetail.dart';
-import 'package:week6/screens/DicePage.dart';
-import 'package:week6/screens/HomePage.dart';
-import 'package:week6/screens/SettingPage.dart';
-import 'package:week6/screens/StatisticsPage.dart';
-import 'package:week6/screens/SumDetail.dart';
+import 'package:week7/screens/DieDetail.dart';
+import 'package:week7/screens/DicePage.dart';
+import 'package:week7/screens/HomePage.dart';
+import 'package:week7/screens/SettingPage.dart';
+import 'package:week7/screens/StatisticsPage.dart';
+import 'package:week7/screens/SumDetail.dart';
 
 final GoRouter router_config = GoRouter(routes: [
   GoRoute(

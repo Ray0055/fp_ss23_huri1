@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:week6/providers/providers.dart';
+import 'package:week7/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week6/screens/DicePage.dart';
-import 'package:week6/screens/StatisticsPage.dart';
-import 'package:week6/screens/SettingPage.dart';
+import 'package:week7/screens/DicePage.dart';
+import 'package:week7/screens/StatisticsPage.dart';
+import 'package:week7/screens/SettingPage.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);

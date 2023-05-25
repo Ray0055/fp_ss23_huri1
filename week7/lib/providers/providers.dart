@@ -1,6 +1,6 @@
-import 'package:week6/functions/Dice.dart';
-import 'package:week6/functions/Movie.dart';
-import 'package:week6/functions/time_clock.dart';
+import 'package:week7/functions/Dice.dart';
+import 'package:week7/functions/Movie.dart';
+import 'package:week7/functions/time_clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
