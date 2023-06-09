@@ -179,10 +179,15 @@ class DicePage extends ConsumerWidget {
                       minimumSize: const Size(100, 40)),
                   onPressed: () {
                     timer.stopTimer();
+                    timer.stopTimer();
+                    ref.watch(databaseProvider).createItems(ref.watch(numberProvider));
+
                   },
                   child: Text("stop timer")),
             ],
           ),
+          Text('count :${ref.watch(databaseProvider).getItems().toString()}'),
+
         ],
       )),
     );

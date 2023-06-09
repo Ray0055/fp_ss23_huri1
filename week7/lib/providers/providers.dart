@@ -1,6 +1,7 @@
 import 'package:week7/functions/Dice.dart';
 import 'package:week7/functions/Movie.dart';
 import 'package:week7/functions/time_clock.dart';
+import 'package:week7/functions/DatabaseHelper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,8 @@ final statisticsIndexProvider =
     ChangeNotifierProvider((ref) => selectedIndex());
 final timerProvider = ChangeNotifierProvider((ref) => TimeClock());
 final movieProvider = ChangeNotifierProvider((ref) => Movie());
-
+final databaseProvider = ChangeNotifierProvider((ref) => DatabaseHelper());
+final numberProvider = StateProvider((ref) => Result(numberOfThrows: 5));
 class bottomBar extends ChangeNotifier {
   int selectedIndex = 0;
 
