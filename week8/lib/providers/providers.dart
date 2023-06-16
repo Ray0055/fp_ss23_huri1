@@ -37,3 +37,23 @@ class selectedIndex extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+void saveToDatabase(WidgetRef ref) async{
+    Result result = await ref.watch(databaseProvider).getResult();
+    int sumThrows = ref.read(diceProvider).sumThrows;
+    int equalDistr = ref.read(diceProvider).eqaulDistr == true ? 1: 0;
+    int timer = ref.read(timerProvider).duration;
+    int diceNumber1 = ref.read(diceProvider).diceNumber1;
+    int diceNumber2 = ref.read(diceProvider).diceNumber2;
+
+    result = Result(numberOfThrows: sumThrows, equalDistr: equalDistr, timer: timer, numberOfDice1: diceNumber1, numberOfDice2: diceNumber2);
+    await ref.watch(databaseProvider).insertResult(result);
+  }
+
+void getFromDatabase(Result result, Dice dice, TimeClock timer) {
+    dice.sumThrows = result.numberOfThrows;
+    dice.eqaulDistr = result.equalDistr == 1 ?true:false;
+    dice.diceNumber1 = result.numberOfDice1;
+    dice.diceNumber2 = result.numberOfDice2;
+    timer.setDuration(result.timer);
+  }

@@ -18,11 +18,11 @@ class HomePage extends ConsumerWidget with WidgetsBindingObserver {
 //get result from databaseProvider
   void _getResult(WidgetRef ref) async{
     Result result = await ref.watch(databaseProvider).getResult();
-    ref.watch(diceProvider).sumThrows = result.numberOfThrows;
-    ref.watch(diceProvider).diceNumber1 = result.numberOfDice1;
-    ref.watch(diceProvider).diceNumber2 = result.numberOfDice2;
-    ref.watch(diceProvider).eqaulDistr =( result.equalDistr==1 ?true:false);
-    ref.watch(timerProvider).setDuration(result.timer);
+    ref.read(diceProvider).sumThrows = result.numberOfThrows;
+    ref.read(diceProvider).diceNumber1 = result.numberOfDice1;
+    ref.read(diceProvider).diceNumber2 = result.numberOfDice2;
+    ref.read(diceProvider).eqaulDistr =( result.equalDistr==1 ?true:false);
+    ref.read(timerProvider).setDuration(result.timer);
   }
 
   @override
@@ -34,7 +34,7 @@ class HomePage extends ConsumerWidget with WidgetsBindingObserver {
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(bottomBarProvider).selectedIndex;
 
-    _getResult(ref);
+   //_getResult(ref);
 
     return Scaffold(
       body: pages[index],

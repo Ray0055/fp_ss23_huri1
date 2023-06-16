@@ -32,6 +32,8 @@ class Dice extends ChangeNotifier {
         maxDie - minDie + 1, (_) => List.filled(maxDie - minDie + 1, 0));
   }
 
+  
+
   void throwDice(bool eqaulDistr, int numberOfThrows, WidgetRef ref) {
     sumThrows += numberOfThrows;
     this.numberOfThrows = numberOfThrows;
@@ -138,6 +140,7 @@ class Dice extends ChangeNotifier {
     ref.watch(databaseProvider).insertResult(result);
   }
 
+  
   List _historyDieStatistics = [];
   List _historySumStatistics = [];
   List _historySumThrows = [];

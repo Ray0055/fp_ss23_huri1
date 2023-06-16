@@ -35,9 +35,9 @@ class DicePage extends ConsumerWidget {
               child: Column(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                    borderRadius: const BorderRadius.only(
+                      topLeft:  Radius.circular(10),
+                      topRight:  Radius.circular(10),
                     ),
                     child: FutureBuilder(
                       future: ref.watch(movieProvider).list,
@@ -47,7 +47,7 @@ class DicePage extends ConsumerWidget {
                             Image.asset(
                                 'assets/Images/Cinema-in-the-Power-Station-image001hero-1600x869.jpg'),
                             const Text('Throw dice to get your film!',
-                                style: const TextStyle(
+                                style:  TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold))
                           ]);
                         } else {
@@ -138,7 +138,7 @@ class DicePage extends ConsumerWidget {
             children: [
               Text(
                 textAlign: TextAlign.left,
-                'The total number of throws: ${ref.watch(diceProvider).sumThrows} ',
+                'The total number of throws: ${ref.read(diceProvider).sumThrows} ',
                 style: const TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 10),

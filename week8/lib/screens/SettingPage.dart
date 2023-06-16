@@ -42,6 +42,7 @@ class SettingPage extends ConsumerWidget {
                                 ref.watch(diceProvider).increment();
                                 ref.watch(timerProvider).resetTimer(ref);
                                 ref.watch(timerProvider).timeStamp = [];
+                                saveToDatabase(ref);
                               })));
                     }),
               ],

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:week8/providers/providers.dart';
 
 class DatabaseHelper extends ChangeNotifier {
   Future<Database> getDatabase() async {
@@ -25,6 +28,16 @@ class DatabaseHelper extends ChangeNotifier {
           timer: maps.last['timer']
       );
   }
+
+  void writeFromDatabase(WidgetRef ref) async{
+    Result result = await ref.watch(databaseProvider).getResult();
+    ref.watch(diceProvider).sumThrows = result.numberOfThrows;
+    ref.watch(diceProvider).diceNumber1 = result.numberOfDice1;
+    ref.watch(diceProvider).diceNumber2 = result.numberOfDice2;
+    ref.watch(diceProvider).eqaulDistr =( result.equalDistr==1 ?true:false);
+    ref.watch(timerProvider).setDuration(result.timer);
+  }
+  
 }
 
 class Result extends ChangeNotifier {
