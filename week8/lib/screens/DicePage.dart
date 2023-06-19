@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8/providers/providers.dart';
-import 'package:week8/functions/DatabaseHelper.dart';
+
 class DicePage extends ConsumerWidget {
   const DicePage({Key? key}) : super(key: key);
 
@@ -12,7 +12,7 @@ class DicePage extends ConsumerWidget {
     final dice = ref.watch(diceProvider);
     final timer = ref.watch(timerProvider);
 
-
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +39,8 @@ class DicePage extends ConsumerWidget {
                       topLeft:  Radius.circular(10),
                       topRight:  Radius.circular(10),
                     ),
-                    child: FutureBuilder(
+                    child: 
+                    FutureBuilder(
                       future: ref.watch(movieProvider).list,
                       builder: (context, AsyncSnapshot snapshot) {
                         if (!snapshot.hasData) {
@@ -93,10 +94,12 @@ class DicePage extends ConsumerWidget {
           ),
           GestureDetector(
             onTap: () {
+              timer.resetTimer(ref);
               dice.throwDice(dice.eqaulDistr, 1, ref);
               ref.read(diceProvider).increment();
               if (timer.isRunning) {
                 timer.stopTimer();
+                saveToDatabase(ref);
                 timer.resetTimer(ref);
                 timer.startTimer();
               } else {
@@ -161,10 +164,12 @@ class DicePage extends ConsumerWidget {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 40)),
                   onPressed: () {
+                    timer.resetTimer(ref);
                     dice.throwDice(dice.eqaulDistr, 1000, ref);
                     dice.increment();
                     if (timer.isRunning) {
                       timer.stopTimer();
+                      saveToDatabase(ref);
                       timer.resetTimer(ref);
                       timer.startTimer();
                     } else {
@@ -180,11 +185,11 @@ class DicePage extends ConsumerWidget {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 40)),
                   onPressed: () {
+                    
                     timer.stopTimer();
-
-
+                    saveToDatabase(ref);
                   },
-                  child: Text("stop timer")),
+                  child: const Text("stop timer")),
             ],
           ),
 

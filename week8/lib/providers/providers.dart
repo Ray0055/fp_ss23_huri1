@@ -4,7 +4,7 @@ import 'package:week8/functions/Movie.dart';
 import 'package:week8/functions/TimeClock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
 final diceProvider = ChangeNotifierProvider((ref) => Dice(1, 6));
 final bottomBarProvider = ChangeNotifierProvider((ref) => bottomBar());
 final statisticsIndexProvider =
@@ -45,9 +45,18 @@ void saveToDatabase(WidgetRef ref) async{
     int timer = ref.read(timerProvider).duration;
     int diceNumber1 = ref.read(diceProvider).diceNumber1;
     int diceNumber2 = ref.read(diceProvider).diceNumber2;
-
-    result = Result(numberOfThrows: sumThrows, equalDistr: equalDistr, timer: timer, numberOfDice1: diceNumber1, numberOfDice2: diceNumber2);
-    await ref.watch(databaseProvider).insertResult(result);
+    String sumStatistics = jsonEncode(ref.read(diceProvider).sumStatistics);
+    String dieStatistics = jsonEncode(ref.read(diceProvider).dieStatistics);
+    // String url = jsonEncode(ref.read(movieProvider).list);
+    String url = 'url';
+    result = Result(numberOfThrows: sumThrows, 
+    equalDistr: equalDistr, timer: timer, 
+    numberOfDice1: diceNumber1, 
+    numberOfDice2: diceNumber2,
+    sumStatistics: sumStatistics,
+    dieStatistics: dieStatistics,
+    url: url);
+    await ref.read(databaseProvider).insertResult(result);
   }
 
 void getFromDatabase(Result result, Dice dice, TimeClock timer) {
@@ -55,5 +64,8 @@ void getFromDatabase(Result result, Dice dice, TimeClock timer) {
     dice.eqaulDistr = result.equalDistr == 1 ?true:false;
     dice.diceNumber1 = result.numberOfDice1;
     dice.diceNumber2 = result.numberOfDice2;
+    dice.sumStatistics = List<int>.from(jsonDecode(result.sumStatistics));
+    dice.dieStatistics = (jsonDecode(result.dieStatistics) as List).map((e) => List<int>.from(e)).toList();
     timer.setDuration(result.timer);
+
   }

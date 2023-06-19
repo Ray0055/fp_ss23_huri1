@@ -15,26 +15,9 @@ class HomePage extends ConsumerWidget with WidgetsBindingObserver {
     SettingPage(),
   ];
 
-//get result from databaseProvider
-  void _getResult(WidgetRef ref) async{
-    Result result = await ref.watch(databaseProvider).getResult();
-    ref.read(diceProvider).sumThrows = result.numberOfThrows;
-    ref.read(diceProvider).diceNumber1 = result.numberOfDice1;
-    ref.read(diceProvider).diceNumber2 = result.numberOfDice2;
-    ref.read(diceProvider).eqaulDistr =( result.equalDistr==1 ?true:false);
-    ref.read(timerProvider).setDuration(result.timer);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('App lifecycle state $state');
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(bottomBarProvider).selectedIndex;
-
-   //_getResult(ref);
 
     return Scaffold(
       body: pages[index],

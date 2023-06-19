@@ -39,18 +39,12 @@ class TimeClock extends ChangeNotifier {
 
   void resetTimer(WidgetRef ref) {
     _timer?.cancel();
-    timeStamp.add(duration);
+    timeStamp.add(_duration);
     _duration = 0;
-    saveToDatabase(ref);
     isRunning = false;
     notifyListeners();
   }
 
-  void saveToDatabase(WidgetRef ref) async{
-    Result result = await ref.watch(databaseProvider).getResult();
-    result = Result(numberOfThrows: result.numberOfThrows, equalDistr: result.equalDistr , timer: timeStamp.last, numberOfDice1: result.numberOfDice1, numberOfDice2:result.numberOfDice2);
-    ref.watch(databaseProvider).insertResult(result);
-  }
 
   String getMaximum() {
     List stamp = timeStamp;

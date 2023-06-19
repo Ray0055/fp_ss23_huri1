@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8/providers/providers.dart';
 import 'package:week8/functions/DatabaseHelper.dart';
+import 'package:week8/functions/DatabaseHelper.dart';
+
 class Dice extends ChangeNotifier {
   bool eqaulDistr = false;
   List<int> die = [0, 0];
@@ -23,13 +25,13 @@ class Dice extends ChangeNotifier {
   List<int> maxDiceIndex = [0, 0];
 
   Dice(int minDie, int maxDie) {
-    this.minDie = minDie;
-    this.maxDie = maxDie;
-    this.rangeOfDie = maxDie - minDie + 1;
-    this.rangeOfSum = 2 * (maxDie - minDie) + 1;
+    minDie = minDie;
+    maxDie = maxDie;
+    rangeOfDie = maxDie - minDie + 1;
+    rangeOfSum = 2 * (maxDie - minDie) + 1;
     sumStatistics = List.generate(rangeOfSum, (_) => 0);
-    List<List<int>> dieStatistics = List.generate(
-        maxDie - minDie + 1, (_) => List.filled(maxDie - minDie + 1, 0));
+    // List<List<int>> dieStatistics = List.generate(
+    //     maxDie - minDie + 1, (_) => List.filled(maxDie - minDie + 1, 0));
   }
 
   
@@ -61,7 +63,7 @@ class Dice extends ChangeNotifier {
     else {
       final random2 = Random();
       final random3 = Random();
-      final dice = List.generate(2 * (maxDie - minDie) - 1, (index) => 0);
+      // final dice = List.generate(2 * (maxDie - minDie) - 1, (index) => 0);
       for (int i = 0; i < numberOfThrows; i++) {
         int choosedSum = random2.nextInt(rangeOfSum);
         sumStatistics[choosedSum]++;
@@ -86,7 +88,7 @@ class Dice extends ChangeNotifier {
     diceNumber1 = random.nextInt(6) + 1;
     diceNumber2 = random.nextInt(6) + 1;
     notifyListeners();
-    saveToDatabase(ref);
+    // saveToDatabase(ref);
 
   }
 
@@ -99,14 +101,6 @@ class Dice extends ChangeNotifier {
     sumThrows = 0;
     notifyListeners();
   }
-  //
-  // void throwDiceOnce() {
-  //   Random random = Random();
-  //   diceNumber1 = random.nextInt(6) + 1;
-  //   diceNumber2 = random.nextInt(6) + 1;
-  //   sumThrows += 1;
-  //   notifyListeners();
-  // }
 
   void equalDistribution(bool value,WidgetRef ref) {
     eqaulDistr = value;
@@ -132,12 +126,6 @@ class Dice extends ChangeNotifier {
         }
       }
     }
-  }
-
-  void saveToDatabase(WidgetRef ref) async{
-    Result result = await ref.watch(databaseProvider).getResult();
-    result = Result(numberOfThrows: this.sumThrows, equalDistr: (this.eqaulDistr == true?1:0), timer: result.timer, numberOfDice1: this.diceNumber1, numberOfDice2: this.diceNumber2);
-    ref.watch(databaseProvider).insertResult(result);
   }
 
   
