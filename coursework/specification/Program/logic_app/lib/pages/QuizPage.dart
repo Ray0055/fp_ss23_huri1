@@ -3,13 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logic_app/providers/Providers.dart';
 import 'package:logic_app/widgets/QuestionWidget.dart';
 import 'package:logic_app/functions/QuestionsCard.dart';
+import 'package:flutter_tex/flutter_tex.dart';
+
 class QuizPage extends ConsumerWidget {
   const QuizPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const double kDefaultPadding = 20.0;
-    QuestionCard questionCard = new QuestionCard(id: 0, question: "What is logic", options: ["A", "B","C","D"], correctIndex: 0, createdTime: "createdTime", modifiedTime: "modifiedTime");
+    QuestionCard questionCard = new QuestionCard(
+        id: 3,
+        question: r"$$A \times B$$",
+        options: ["A", "B", "C", "D"],
+        correctIndex: 0,
+        createdTime: "createdTime",
+        modifiedTime: "modifiedTime");
     return Scaffold(
       appBar: AppBar(
         title: Text("Number"),
@@ -33,15 +41,17 @@ class QuizPage extends ConsumerWidget {
           ),
         ),
         ElevatedButton(
-            onPressed: (){
-          ref.watch(dataBaseProvider).addQuestions(questionCard);
-          },
+            onPressed: () {
+              ref.watch(dataBaseProvider).addQuestions(questionCard);
+            },
             child: Text("add")),
         ElevatedButton(
-            onPressed: (){
+            onPressed: () {
               ref.watch(dataBaseProvider).clearTable();
             },
-            child: Text("clear table"))
+            child: Text("clear table")),
+
+
       ]),
     );
   }

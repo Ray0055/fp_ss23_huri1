@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:logic_app/functions/QuestionsCard.dart';
 import 'package:logic_app/providers/Providers.dart';
 
+
 class QuestionCardWidget extends ConsumerWidget {
+  const QuestionCardWidget({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int index = ref.watch(questionIndexProvider);
     return FutureBuilder<QuestionCard?>(
-      future: ref.read(dataBaseProvider).getQuestionById(0), // your Future function here
+      future: ref.watch(dataBaseProvider).getQuestionById(index),
+      // your Future function here
       builder: (BuildContext context, AsyncSnapshot<QuestionCard?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -25,13 +31,9 @@ class QuestionCardWidget extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      currentQuestion.question,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    TeXView(
+                        renderingEngine: const TeXViewRenderingEngine.katex(),
+                        child: TeXViewDocument(currentQuestion.question)),
                     SizedBox(height: 20),
                     for (var i = 0; i < currentQuestion.options.length; i++)
                       ListTile(
@@ -43,13 +45,16 @@ class QuestionCardWidget extends ConsumerWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // Fetch and set last question
+                            ref.read(questionIndexProvider.notifier).state--;
                           },
                           child: Text("Last"),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            // Fetch and set next question
+                            ref.read(questionIndexProvider.notifier).state++;
+                            if (ref.read(questionIndexProvider.notifier).state > 3){
+                              ref.read(questionIndexProvider.notifier).state=1;
+                            }
                           },
                           child: Text("Next"),
                         ),

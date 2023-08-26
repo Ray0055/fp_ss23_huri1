@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 final bottomBarProvider = ChangeNotifierProvider((ref) => BottomBar());
 final darkModeProvider = ChangeNotifierProvider((ref) => DarkMode());
 final dataBaseProvider = ChangeNotifierProvider((ref) => DatabaseHelper.instance);
-
+final questionIndexProvider = StateProvider((ref) => 0);
 
 class BottomBar extends ChangeNotifier {
   int selectedIndex = 0;
