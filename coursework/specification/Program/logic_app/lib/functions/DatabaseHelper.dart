@@ -76,8 +76,26 @@ CREATE TABLE users (
         modifiedTime: map['modified_time'],
       );
     }
-
   }
+
+  Future<List<String>> getQuestionsByQuery(String query) async {
+    final db = await database;
+
+    // 这里假设您希望在问题内容中进行搜索。
+    // 您也可以扩展这个查询来在其他字段中搜索。
+    final List<Map<String, dynamic>> maps = await db.query(
+      'questions',
+      where: 'question_content LIKE ?',
+      whereArgs: ['%$query%'],
+    );
+
+    return List.generate(maps.length, (i) {
+      return maps[i]['question_content'];
+    });
+  }
+
+
+
 
 
 

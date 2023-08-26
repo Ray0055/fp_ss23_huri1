@@ -4,7 +4,7 @@ import 'package:logic_app/providers/Providers.dart';
 import 'package:logic_app/widgets/QuestionWidget.dart';
 import 'package:logic_app/functions/QuestionsCard.dart';
 import 'package:flutter_tex/flutter_tex.dart';
-
+import 'package:logic_app/functions/CustomSearchDelegate.dart';
 class QuizPage extends ConsumerWidget {
   const QuizPage({Key? key}) : super(key: key);
 
@@ -22,7 +22,7 @@ class QuizPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text("Number"),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [IconButton(onPressed: () {showSearch(context: context, delegate: CustomSearchDelegate());}, icon: Icon(Icons.search))],
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {},
