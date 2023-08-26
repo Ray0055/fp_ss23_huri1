@@ -4,6 +4,7 @@ import 'package:flutter_tex/flutter_tex.dart';
 import 'package:logic_app/functions/QuestionsCard.dart';
 import 'package:logic_app/providers/Providers.dart';
 
+final selectedIndexProvider = StateProvider<int?>((ref) => null);
 
 class QuestionCardWidget extends ConsumerWidget {
   const QuestionCardWidget({super.key});
@@ -11,6 +12,7 @@ class QuestionCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     int index = ref.watch(questionIndexProvider);
+    int? selectedIndex = ref.watch(selectedIndexProvider);
     return FutureBuilder<QuestionCard?>(
       future: ref.watch(dataBaseProvider).getQuestionById(index),
       // your Future function here
@@ -37,8 +39,33 @@ class QuestionCardWidget extends ConsumerWidget {
                     SizedBox(height: 20),
                     for (var i = 0; i < currentQuestion.options.length; i++)
                       ListTile(
+                        leading: Icon(
+                          selectedIndex == null
+                              ? Icons.circle
+                              : selectedIndex == i
+                              ? i == currentQuestion.correctIndex
+                              ? Icons.check_circle
+                              : Icons.cancel
+                              : i == currentQuestion.correctIndex
+                              ? Icons.check_circle
+                              : Icons.circle,
+                          color: selectedIndex == null
+                              ? Colors.grey
+                              : selectedIndex == i
+                              ? i == currentQuestion.correctIndex
+                              ? Colors.green
+                              : Colors.red
+                              : i == currentQuestion.correctIndex
+                              ? Colors.green
+                              : Colors.grey,
+                        ),
                         title: Text(currentQuestion.options[i]),
-                        // Add your onTap logic here
+                        onTap: selectedIndex == null
+                            ? () {
+                          ref.read(selectedIndexProvider.notifier).state = i;
+
+                        }
+                            : null,
                       ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,18 +73,31 @@ class QuestionCardWidget extends ConsumerWidget {
                         ElevatedButton(
                           onPressed: () {
                             ref.read(questionIndexProvider.notifier).state--;
+                            ref.watch(selectedIndexProvider.notifier).state = null;
+
                           },
                           child: Text("Last"),
                         ),
                         ElevatedButton(
                           onPressed: () {
                             ref.read(questionIndexProvider.notifier).state++;
-                            if (ref.read(questionIndexProvider.notifier).state > 3){
+                            if (ref.read(questionIndexProvider.notifier).state > 7){
                               ref.read(questionIndexProvider.notifier).state=1;
                             }
+                            ref.watch(selectedIndexProvider.notifier).state = null;
+
                           },
                           child: Text("Next"),
                         ),
+                        IconButton(onPressed: (){
+                          showModalBottomSheet<void>(context: context, builder: (BuildContext context){
+                            return Container(
+                              height: 200,
+                              color: Colors.blue,
+                              child: Text("explanation")
+                            );
+                          });
+                        }, icon: Icon(Icons.info))
                       ],
                     ),
                   ],

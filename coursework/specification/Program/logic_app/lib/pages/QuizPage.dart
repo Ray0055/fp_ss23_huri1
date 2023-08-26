@@ -12,10 +12,10 @@ class QuizPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const double kDefaultPadding = 20.0;
     QuestionCard questionCard = new QuestionCard(
-        id: 3,
-        question: r"$$A \times B$$",
-        options: ["A", "B", "C", "D"],
-        correctIndex: 0,
+        id: 6,
+        question: r"$$P \rightarrow Q$$",
+        options: ["true", "false"],
+        correctIndex: 1,
         createdTime: "createdTime",
         modifiedTime: "modifiedTime");
     return Scaffold(
