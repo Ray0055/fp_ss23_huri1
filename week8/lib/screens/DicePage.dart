@@ -12,8 +12,6 @@ class DicePage extends ConsumerWidget {
     final dice = ref.watch(diceProvider);
     final timer = ref.watch(timerProvider);
 
-    
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dice Throw'),
@@ -36,11 +34,10 @@ class DicePage extends ConsumerWidget {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topLeft:  Radius.circular(10),
-                      topRight:  Radius.circular(10),
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
                     ),
-                    child: 
-                    FutureBuilder(
+                    child: FutureBuilder(
                       future: ref.watch(movieProvider).list,
                       builder: (context, AsyncSnapshot snapshot) {
                         if (!snapshot.hasData) {
@@ -48,7 +45,7 @@ class DicePage extends ConsumerWidget {
                             Image.asset(
                                 'assets/Images/Cinema-in-the-Power-Station-image001hero-1600x869.jpg'),
                             const Text('Throw dice to get your film!',
-                                style:  TextStyle(
+                                style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold))
                           ]);
                         } else {
@@ -185,15 +182,12 @@ class DicePage extends ConsumerWidget {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 40)),
                   onPressed: () {
-                    
                     timer.stopTimer();
                     saveToDatabase(ref);
                   },
                   child: const Text("stop timer")),
             ],
           ),
-
-
         ],
       )),
     );

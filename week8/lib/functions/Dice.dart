@@ -2,8 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8/providers/providers.dart';
-import 'package:week8/functions/DatabaseHelper.dart';
-import 'package:week8/functions/DatabaseHelper.dart';
 
 class Dice extends ChangeNotifier {
   bool eqaulDistr = false;
@@ -30,11 +28,7 @@ class Dice extends ChangeNotifier {
     rangeOfDie = maxDie - minDie + 1;
     rangeOfSum = 2 * (maxDie - minDie) + 1;
     sumStatistics = List.generate(rangeOfSum, (_) => 0);
-    // List<List<int>> dieStatistics = List.generate(
-    //     maxDie - minDie + 1, (_) => List.filled(maxDie - minDie + 1, 0));
   }
-
-  
 
   void throwDice(bool eqaulDistr, int numberOfThrows, WidgetRef ref) {
     sumThrows += numberOfThrows;
@@ -63,7 +57,7 @@ class Dice extends ChangeNotifier {
     else {
       final random2 = Random();
       final random3 = Random();
-      // final dice = List.generate(2 * (maxDie - minDie) - 1, (index) => 0);
+
       for (int i = 0; i < numberOfThrows; i++) {
         int choosedSum = random2.nextInt(rangeOfSum);
         sumStatistics[choosedSum]++;
@@ -89,7 +83,6 @@ class Dice extends ChangeNotifier {
     diceNumber2 = random.nextInt(6) + 1;
     notifyListeners();
     // saveToDatabase(ref);
-
   }
 
   void resetStatistics() {
@@ -102,7 +95,7 @@ class Dice extends ChangeNotifier {
     notifyListeners();
   }
 
-  void equalDistribution(bool value,WidgetRef ref) {
+  void equalDistribution(bool value, WidgetRef ref) {
     eqaulDistr = value;
     saveToDatabase(ref);
     notifyListeners();
@@ -128,7 +121,6 @@ class Dice extends ChangeNotifier {
     }
   }
 
-  
   List _historyDieStatistics = [];
   List _historySumStatistics = [];
   List _historySumThrows = [];

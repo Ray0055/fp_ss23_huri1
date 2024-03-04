@@ -2,8 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week8/providers/providers.dart';
-import 'package:week8/functions/DatabaseHelper.dart';
+
 
 class TimeClock extends ChangeNotifier {
   bool isRunning = false;

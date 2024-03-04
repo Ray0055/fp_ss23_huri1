@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8/screens/DicePage.dart';
 import 'package:week8/screens/StatisticsPage.dart';
 import 'package:week8/screens/SettingPage.dart';
-import 'package:week8/functions/DatabaseHelper.dart';
 
 class HomePage extends ConsumerWidget with WidgetsBindingObserver {
   const HomePage({Key? key}) : super(key: key);
